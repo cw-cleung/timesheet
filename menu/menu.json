@@ -1,0 +1,10 @@
+[
+  {
+    "label": "test_page",
+    "icon_class": "fa-file-text-o",
+    "data": {
+      "page": "test_page"
+    },
+    "expanded": false
+  }
+]

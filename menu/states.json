@@ -1,0 +1,6 @@
+{
+  "test_page": {
+    "url": "/test_page",
+    "templateUrl": "html/test_page.html"
+  }
+}
