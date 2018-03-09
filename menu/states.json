@@ -2,5 +2,9 @@
   "test_page": {
     "url": "/test_page",
     "templateUrl": "html/test_page.html"
+  },
+  "timesheet_input_by_day": {
+    "url": "/timesheet_input_by_day",
+    "templateUrl": "html/timesheet_input_by_day.html"
   }
 }
