@@ -108,9 +108,6 @@ app.controller('timesheet_input_by_dayCtrl', ['$scope', '$rootScope', '$log', '$
     };
 
 
-    };
-
-
 
 
   }]);
