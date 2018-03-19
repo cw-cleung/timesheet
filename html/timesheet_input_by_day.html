@@ -5,120 +5,107 @@
 			<i ng-if="$root.isLoading"  class="fa fa-cog fa-spin" ></i>
 			<i ng-if="!$root.isLoading" class="fa fa-file-text-o"></i></span> INPUT by DAY
 	</h4-->
-	
-	<div class="checkbox">
-			<label>
-				<input type="checkbox" ng-model="oneAtATime">
-				Open only one at a time
-			</label>
-		</div>
 
-	<!-- FIRST ROW -->
-	<div class="row" style="padding: 0px;">
-			<div class="col-xs-12 col-sm-12 col-md-12" style="background-color:darkgrey; ">
-					<div class ="col-md-2 col-sm-3 col-xs-4" style = "padding: 5px">
-							<tm1-ui-subnm tm1-instance="dev" tm1-dimension="Year" tm1-subset="Default" tm1-default-element="{{defaults.Year}}"
-														ng-model="selections.Year" 
-														tm1-change='updateSettings(values, defaults, selections, "Year", "Cur Year", {"tm1Dimension":"Year", "value":data})'>
-													</tm1-ui-subnm>
-					</div>						
-					<div class ="col-md-2 col-sm-3 col-xs-4" style = "padding: 5px">
-							<tm1-ui-subnm tm1-instance="dev" tm1-dimension="Week" tm1-subset="Default" tm1-default-element="{{defaults.Week}}"
-												ng-model="selections.Week" 
-												tm1-change='updateSettings(values, defaults, selections, "Week", "Cur Week", {"tm1Dimension":"Week", "value":data})'>
-											</tm1-ui-subnm>
-					</div>
+  <div class="checkbox">
+    <label>
+      <input type="checkbox" ng-model="oneAtATime">Open only one at a time
+    </label>
+  </div>
 
-					<span class="pull-right">												
-							<tm1-ui-dbr tm1-instance="dev" tm1-cube="Timesheet" 
-										tm1-elements='Actual,{{selections.Year}},{{selections.Week}},"All Week Days","All Projects",{{values.userName.Name}}, Local, "All Billiable Hours"'
-										tm1-hide-context-menu = "true" tm1-data-decimal="1"	tm1-read-only="true">
-							</tm1-ui-dbr></span>
+  <!-- FIRST ROW -->
+  <div class="row" style="padding: 0px;">
+    <div class="col-xs-12 col-sm-12 col-md-12" style="background-color:darkgrey; ">
+      <div class="col-md-2 col-sm-3 col-xs-4" style="padding: 5px">
+        <tm1-ui-subnm tm1-instance="dev" tm1-dimension="Year" tm1-subset="Default" tm1-default-element="{{defaults.Year}}" ng-model="selections.Year"
+          tm1-change='updateSettings(values, defaults, selections, "Year", "Cur Year", {"tm1Dimension":"Year", "value":data})'>
+        </tm1-ui-subnm>
+      </div>
+      <div class="col-md-2 col-sm-3 col-xs-4" style="padding: 5px">
+        <tm1-ui-subnm tm1-instance="dev" tm1-dimension="Week" tm1-subset="Default" tm1-default-element="{{defaults.Week}}" ng-model="selections.Week"
+          tm1-change='updateSettings(values, defaults, selections, "Week", "Cur Week", {"tm1Dimension":"Week", "value":data})'>
+        </tm1-ui-subnm>
+      </div>
 
-			</div>
-	</div>
-
-	
-
-	<!-- 2ND ROW -->
-	<div class="row" style="padding: 5px;">
-
-  <uib-accordion close-others="oneAtATime">
+      <span class="pull-right">
+        <tm1-ui-dbr tm1-instance="dev" tm1-cube="Timesheet" tm1-elements='Actual,{{selections.Year}},{{selections.Week}},"All Week Days","All Projects",{{values.userName.Name}}, Local, "All Billiable Hours"'
+          tm1-hide-context-menu="true" tm1-data-decimal="1" tm1-read-only="true">
+        </tm1-ui-dbr>
+      </span>
+    </div>
+  </div>
+  <!-- 1ST ROW END -->
 
 
-			<div uib-accordion-group class="panel-info" ng-repeat="weekday in ['MON','TUE','WED','THU','FRI','SAT','SUN']" >
-						<uib-accordion-heading>
-							{{weekday}} - (4) PROJECTS
-							<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
-							<span class="pull-right">												
-									<tm1-ui-dbr tm1-instance="dev" tm1-cube="Timesheet" 
-												tm1-elements='Actual,{{selections.Year}},{{selections.Week}},{{weekday}},"All Projects",{{values.userName.Name}}, Local, "All Billiable Hours"'
-												tm1-hide-context-menu = "true" tm1-data-decimal="1"	tm1-read-only="true">
-									</tm1-ui-dbr></span>
+  <!-- 2ND ROW -->
+  <div class="row" style="padding: 5px;">
+    <uib-accordion close-others="oneAtATime">
+      <div uib-accordion-group class="panel-info" ng-repeat="weekday in ['MON','TUE','WED','THU','FRI','SAT','SUN']">
+        <uib-accordion-heading>
+          {{weekday}} - (4) PROJECTS
+          <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+          <span class="pull-right">
+            <tm1-ui-dbr tm1-instance="dev" tm1-cube="Timesheet" tm1-elements='Actual,{{selections.Year}},{{selections.Week}},{{weekday}},"All Projects",{{values.userName.Name}}, Local, "All Billiable Hours"'
+              tm1-hide-context-menu="true" tm1-data-decimal="1" tm1-read-only="true">
+            </tm1-ui-dbr>
+          </span>
+        </uib-accordion-heading>
+        <!-- Project -->
+        <uib-accordion close-others=false>
+          <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12" style="padding-right:1px" ng-repeat="project in lists.selectedProjects track by $index">
+            <div uib-accordion-group class="panel-primary" style="margin-top: 1px">
+              <uib-accordion-heading>
+                {{project.Attributes.Description}}
+                <div class="pull-right">
+                  <tm1-ui-dbr tm1-instance="dev" tm1-cube="Timesheet" tm1-elements='Actual,{{selections.Year}},{{selections.Week}},{{weekday}},{{project.Name}},{{values.userName.Name}}, Local, "All Billiable Hours"'
+                    tm1-hide-context-menu="true" tm1-data-decimal="1" tm1-read-only="true">
+                  </tm1-ui-dbr>
+                </div>
+              </uib-accordion-heading>
 
-						</uib-accordion-heading>
-						<uib-accordion close-others=false>
-										<div class ="col-lg-4 col-md-4 col-sm-6 col-xs-12" style="padding-right:1px" ng-repeat="project in lists.selectedProjects">
+              <uib-accordion close-others=false>
+                <div class="col-md-12 col-xs-12" style="padding-right:10px; padding-top:0px">
+                  <div uib-accordion-group class="panel-success" style="margin-top: 1px;" ng-repeat="measure in lists.measureCommon track by $index">
+                    <uib-accordion-heading>
+                      {{measure.Name}}
+                      <span class="pull-right">
+                        <tm1-ui-dbr tm1-instance="dev" tm1-cube="Timesheet" tm1-elements='Actual,{{selections.Year}},{{selections.Week}},{{weekday}},{{project.Name}},{{values.userName.Name}},Local,{{measure.Name}}'
+                          ng-model="measure.hourRead[project.Index][measure.Index]" tm1-hide-context-menu="true" tm1-data-decimal="1"
+                          tm1-read-only="true">
+                        </tm1-ui-dbr>
+                      </span>
+                    </uib-accordion-heading>
 
-											<div uib-accordion-group class="panel-primary" style = "margin-top: 1px">
-													<uib-accordion-heading>
-															{{project.Attributes.Description}}
-															<span class="pull-right">												
-																	<tm1-ui-dbr tm1-instance="dev" tm1-cube="Timesheet" 
-																				tm1-elements='Actual,{{selections.Year}},{{selections.Week}},{{weekday}},{{project.Name}},{{values.userName.Name}}, Local, "All Billiable Hours"'
-																				tm1-hide-context-menu = "true" tm1-data-decimal="1"	tm1-read-only="true">
-																	</tm1-ui-dbr></span>
-													</uib-accordion-heading>
+                    <div ng-init="measure.hourInput[project.Index][measure.Index] = measure.hourRead[project.Index][measure.Index]">
+                      <span uib-rating ng-model="measure.hourInput[project.Index][measure.Index]" max={{defaults.max}} on-hover="hoveringOver(project.Index, measure.Index, value)"
+                        on-leave="hoveringOut(project.Index, measure.Index)" ng-change="updateHour(weekday, project.Name, measure.Name, measure.hourInput[project.Index][measure.Index])"
+                        state-on="'glyphicon glyphicon-stop'" state-off="'glyphicon glyphicon-minus'" titles="defaults.ratingTitle"
+                        aria-labelledby="default-rating">
+                      </span>
+                      <span ng-show="status.overIcon[project.Index][measure.Index]">&nbsp&nbsp&nbsp {{values.hour[project.Index][measure.Index] | formatNumber:1}}&nbsp h</span>
+                      <span ng-show="!status.overIcon[project.Index][measure.Index]">&nbsp&nbsp
+                        <tm1-ui-dbr tm1-instance="dev" tm1-cube="Timesheet" tm1-elements='Actual,{{selections.Year}},{{selections.Week}},{{weekday}},{{project.Name}},{{values.userName.Name}},Local,{{measure.Name}}'
+                          ng-model="measure.hourRead[project.Index][measure.Index]" tm1-hide-context-menu="true" tm1-data-decimal="1"
+                          tm1-read-only="true">
+                        </tm1-ui-dbr> h
+                      </span>
 
-
-													<uib-accordion close-others=false>
-															<span class ="col-md-12 col-xs-12" style="padding-right:10px; padding-top:0px">
-																	<div uib-accordion-group class="panel-success" style = "margin-top: 1px;"  ng-repeat="measure in lists.measureCommon">
-																		<uib-accordion-heading>	
-																			{{measure.Name}} 
-																			<span class="pull-right">
-																				<tm1-ui-dbr tm1-instance="dev" tm1-cube="Timesheet" 
-																						tm1-elements='Actual,{{selections.Year}},{{selections.Week}},{{weekday}},{{project.Name}},{{values.userName.Name}},Local,{{measure.Name}}'
-																						ng-model = "measure.hours"
-																						tm1-hide-context-menu = "true" tm1-data-decimal="1"	tm1-read-only="true"
-																						>
-																				</tm1-ui-dbr>
-																			</span>
-																			<!--span class="pull-right"> : </span>
-																			<span class="pull-right">{{measure.Name}}</span-->
-
-																		</uib-accordion-heading>
-
-																		<span uib-rating ng-model="measure.hourInput" max=16 on-hover="hoveringOver(value)" on-leave="overIcon = null" 
-																						state-on="'glyphicon glyphicon-stop'" state-off="'glyphicon glyphicon-minus'" 
-																						titles="['one','two','three']" aria-labelledby="default-rating"></span> {{measure.hourInput}} h
-																	</div>
-																	<div style ="margin-top: 5px">
-																		<tm1-ui-dbr tm1-instance="dev" tm1-cube="Timesheet" 
-																						tm1-elements='Actual,{{selections.Year}},{{selections.Week}},{{weekday}},{{project.Name}},{{values.userName.Name}}, Local , "Comment"'
-																						tm1-placeholder="Please Input Comment Here."
-																						tm1-format-html="true" tm1-format-html-buttons="[['h1','h2','h3']]">
-																		</tm1-ui-dbr>
-																	</div>
-																</span>
-															
-													</uib-accordion>
-					
-				
-
-
-
-
-											</div>
-										</div>
-										
-						</uib-accordion>
-			</div>
-
-
-	</uib-accordion>
-
-	</div>
-
-
+                      <span ng-click="measure.hourInput[project.Index][measure.Index]=0; updateHour(weekday, project.Name, measure.Name, 0)"> &nbsp
+                        <i class="fa fa-trash-o"></i>
+                      </span>
+                    </div>
+                  </div>
+                  <div style="margin-top: 5px">
+                    <tm1-ui-dbr tm1-instance="dev" tm1-cube="Timesheet" tm1-elements='Actual,{{selections.Year}},{{selections.Week}},{{weekday}},{{project.Name}},{{values.userName.Name}}, Local , "Comment"'
+                      tm1-placeholder="Please Input Comment Here." tm1-format-html="true" tm1-format-html-buttons="[['h1','h2','h3']]">
+                    </tm1-ui-dbr>
+                  </div>
+                </div>
+              </uib-accordion>
+            </div>
+          </div>
+        </uib-accordion>
+      </div>
+    </uib-accordion>
+  </div>
+  <!-- 2ND ROW END -->
 </div>

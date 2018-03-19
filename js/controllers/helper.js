@@ -23,7 +23,6 @@ app.service('$$helper', ['$tm1Ui', '$location', function($tm1Ui, $location) {
                 }
             }
 
-            console.log ('sysParameterValue:', sysParameterValue.value);
 
             //Set defaults variable
             defaults[urlParameter] = newValue;
