@@ -76,7 +76,8 @@
                     </uib-accordion-heading>
 
                     <div ng-init="measure.hourInput[project.Index][measure.Index] = measure.hourRead[project.Index][measure.Index]">
-                      <span uib-rating ng-model="measure.hourInput[project.Index][measure.Index]" max={{defaults.max}} on-hover="hoveringOver(project.Index, measure.Index, value)"
+                      <!-- TODO: change to Angular slider -->
+                      <span uib-rating ng-model="measure.hourInput[project.Index][measure.Index]" max={{defaults.ratingMax}} on-hover="hoveringOver(project.Index, measure.Index, value)"
                         on-leave="hoveringOut(project.Index, measure.Index)" ng-change="updateHour(weekday, project.Name, measure.Name, measure.hourInput[project.Index][measure.Index])"
                         state-on="'glyphicon glyphicon-stop'" state-off="'glyphicon glyphicon-minus'" titles="defaults.ratingTitle"
                         aria-labelledby="default-rating">
@@ -94,10 +95,17 @@
                       </span>
                     </div>
                   </div>
-                  <div style="margin-top: 5px">
-                    <tm1-ui-dbr tm1-instance="dev" tm1-cube="Timesheet" tm1-elements='Actual,{{selections.Year}},{{selections.Week}},{{weekday}},{{project.Name}},{{values.userName.Name}}, Local , "Comment"'
-                      tm1-placeholder="Please Input Comment Here." tm1-format-html="true" tm1-format-html-buttons="[['h1','h2','h3']]">
-                    </tm1-ui-dbr>
+                  <div style="margin-top: 5px; margin-bottom: 5px">
+                    <div class="col-xs-10 col-md-10">
+                      <tm1-ui-dbr tm1-instance="dev" tm1-cube="Timesheet" tm1-elements='Actual,{{selections.Year}},{{selections.Week}},{{weekday}},{{project.Name}},{{values.userName.Name}}, Local , "Comment"'
+                        tm1-placeholder="Please Input Comment Here." tm1-format-html="true" tm1-format-html-buttons="[['h1','h2','h3']]">
+                      </tm1-ui-dbr>
+                    </div>
+                    <div class="col-xs-2 col-md-2">
+                      <span ng-click="showCommentModal(weekday, project)" data-toggle="modal" data-target="#modalComment">
+                        <i class="fa fa-tasks fa-xl"></i>
+                      </span>
+                    </div>
                   </div>
                 </div>
               </uib-accordion>
@@ -108,4 +116,74 @@
     </uib-accordion>
   </div>
   <!-- 2ND ROW END -->
+
+
+  <!-- comment modal -->
+  <div class="modal fade" id="modalComment" role="dialog">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="closeCommentModal()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h3>Input Comment</h3>
+        </div>
+        <div class="modal-body">
+
+          <div class="row">
+            <notification type="success" message="test" show="showSuccess" timeout="2000"></notification>
+            <div class="col-xs-8 col-md-9">
+              <input type="text" class="form-control" ng-model="comment" placeholder="Please Input Comment Here">
+            </div>
+            <div class="col-xs-2 col-md-1" style="padding:0px">
+              <input type="number" class="form-control" ng-model="commentHour" placeholder="0 h">
+            </div>
+            <div class="col-xs-2 col-md-1" style="padding-top:10px">
+              <span ng-click="addComment({'weekday': '', 'project': '', 'comment': comment, 'commentHour': commentHour})">
+                <i class="fa fa-plus-circle fa-lg"></i>
+              </span>
+            </div>
+          </div>
+
+          <ul class="list-group no-padding margin:0px;">
+            <li class="list-group-item row" ng-repeat="comment in values.comments | filter: {weekday: commentModal.weekday, project: commentModal.projectObj.Index}">
+              <div class="col-xs-8 col-md-9">
+                <span>{{comment.comment}}</span>
+              </div>
+              <div class="col-xs-2 col-md-1" style="padding:0px">
+                <span>{{comment.commentHour}} h</span>
+              </div>
+              <div class="col-xs-2 col-md-1" style="padding-left:10px; padding-right:0px;">
+                <span ng-click="deleteComment({'weekday': '', 'project': '', 'comment': comment.comment, 'commentHour': comment.commentHour})">
+                  <i class="fa fa-minus-circle fa-lg"></i>
+                </span>
+              </div>
+            </li>
+            <li class="list-group-item row" ng-show="(values.comments | filter: {weekday: commentModal.weekday, project: commentModal.projectObj.Index} | sumByKey:'commentHour') > 0">
+              <div class="col-xs-8 col-md-9">
+                <span>Total</span>
+              </div>
+              <div class="col-xs-2 col-md-1" style="padding:0px">
+                <span>{{values.comments | filter: {weekday: commentModal.weekday, project: commentModal.projectObj.Index} | sumByKey:'commentHour'}}</span>
+              </div>
+              <div class="col-xs-2 col-md-1" style="padding-left:10px; padding-right:0px;">
+                <span ng-click="submitComment()">
+                  <i class="fa fa-check-circle fa-lg"></i>
+                </span>
+              </div>
+            </li>
+          </ul>
+
+
+        </div>
+        <div class="modal-footer">
+          <div class="col-md-6">
+            <button class="btn btn-block btn-default col-md-6" data-dismiss="modal" ng-click="closeCommentModal()" style="height:44px;">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- comment modal end -->
+
 </div>
