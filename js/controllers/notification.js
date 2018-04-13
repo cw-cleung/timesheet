@@ -8,7 +8,7 @@
         message: '@',
         timeout: '@'
        },
-      template: '<div uib-alert class="alert alert-dismissible {{alertType}}"  ng-show="show" dismiss-on-timeout="{{timeout}}" close="closeAlert()">{{timeout}}{{message}}</div>',
+      template: '<div uib-alert class="alert alert-dismissible {{alertType}}"  ng-show="show" dismiss-on-timeout="{{timeout}}" close="closeAlert()">{{message}}</div>',
       link: function ($scope, $elements, $attributes, directiveCtrl, transclude) {
         $scope.alertType = 'alert-' + ($scope.type || 'warning');
         // TODO: timeout is not working in comment Modal
