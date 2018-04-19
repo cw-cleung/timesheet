@@ -6,5 +6,13 @@
   "timesheet_input_by_day": {
     "url": "/timesheet_input_by_day",
     "templateUrl": "html/timesheet_input_by_day.html"
+  },
+  "test_page1": {
+    "url": "/test_page1",
+    "templateUrl": "html/test_page1.html"
+  },
+  "test_page2": {
+    "url": "/test_page2",
+    "templateUrl": "html/test_page2.html"
   }
 }

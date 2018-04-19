@@ -75,7 +75,7 @@
                       </span>
                     </uib-accordion-heading>
 
-                    <div ng-init="measure.hourInput[project.Index][measure.Index] = measure.hourRead[project.Index][measure.Index]">
+                    <div ng-if="measure.hourRead" ng-init="measure.hourInput[project.Index][measure.Index] = measure.hourRead[project.Index][measure.Index] * 2">
                       <!-- TODO: change to Angular slider -->
                       <span uib-rating ng-model="measure.hourInput[project.Index][measure.Index]" max={{defaults.ratingMax}} on-hover="hoveringOver(project.Index, measure.Index, value)"
                         on-leave="hoveringOut(project.Index, measure.Index)" ng-change="updateHour(weekday, project.Name, measure.Name, measure.hourInput[project.Index][measure.Index])"

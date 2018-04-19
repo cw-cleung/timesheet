@@ -1,18 +1,37 @@
 [
   {
-    "label": "test_page",
-    "icon_class": "fa-file-text-o",
-    "data": {
-      "page": "test_page"
-    },
-    "expanded": false
-  },
-  {
     "label": "Input by Day",
     "icon_class": "fa-file-text-o",
+    "children": [],
     "data": {
       "page": "timesheet_input_by_day"
     },
-    "expanded": false
+    "expanded": true
+  },
+  {
+    "label": "test_page",
+    "icon_class": "fa-file-text-o",
+    "children": [
+      {
+        "label": "test_page1",
+        "icon_class": "fa-file-text-o",
+        "data": {
+          "page": "test_page1"
+        },
+        "expanded": false
+      },
+      {
+        "label": "test_page2",
+        "icon_class": "fa-file-text-o",
+        "data": {
+          "page": "test_page2"
+        },
+        "expanded": false
+      }
+    ],
+    "data": {
+      "page": "test_page"
+    },
+    "expanded": true
   }
 ]

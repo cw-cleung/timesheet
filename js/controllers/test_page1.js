@@ -1,4 +1,4 @@
-app.controller('test_pageCtrl', ['$scope', '$rootScope', '$log', '$tm1Ui', function($scope, $rootScope, $log, $tm1Ui) {
+app.controller('test_page1Ctrl', ['$scope', '$rootScope', '$log', '$tm1Ui', function($scope, $rootScope, $log, $tm1Ui) {
    /*
     *     defaults.* are variables that are declared once and are changed in the page, otherwise known as constants in programming languages
     *     lists.* should be used to store any lists that are used with ng-repeat, i.e. tm1-ui-element-list
@@ -12,5 +12,5 @@ app.controller('test_pageCtrl', ['$scope', '$rootScope', '$log', '$tm1Ui', funct
     $scope.selections = {};
     $scope.lists = {};
     $scope.values = {};
-    $scope.myList = [{name: 'Foo', total: 1}, {name: 'Bar', total: 2}, {name: 'Baz', total: 3}];
+    
 }]);
